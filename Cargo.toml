@@ -10,3 +10,5 @@ axum = { version = "*", features = ["headers"] }
 tokio = { version = "*", features = ["full"] }
 serde = { version = "*", features = ["derive"] }
 envconfig = { version = "*" }
+log = { version = "*" }
+env_logger = { version = "*" }

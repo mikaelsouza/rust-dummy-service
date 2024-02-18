@@ -1,4 +1,5 @@
 use envconfig::Envconfig;
+use log;
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -14,7 +15,7 @@ impl FromStr for Environment {
             "PROD" => Ok(Self::PROD),
             "DEV" => Ok(Self::DEV),
             _ => {
-                println!("Environment from ENV different from [PROD|DEV]. Env value: {}. Defaulting to DEV.", s);
+                log::warn!("Environment from ENV different from [PROD|DEV]. Env value: {}. Defaulting to DEV.", s);
                 Ok(Self::DEV)
             }
         }
