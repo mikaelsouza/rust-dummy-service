@@ -3,12 +3,13 @@ use envconfig::Envconfig;
 use log;
 mod config;
 mod handlers;
+mod model;
 mod setup;
 
 #[tokio::main]
 async fn main() {
     env_logger::builder()
-        .filter_level(log::LevelFilter::Info)
+        .filter_level(log::LevelFilter::Warn)
         .init();
 
     log::info!("Starting the server");

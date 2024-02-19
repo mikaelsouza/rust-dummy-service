@@ -6,6 +6,7 @@ pub fn define_routes() -> Router {
     Router::new()
         .route("/", get(handlers::hello_world))
         .route("/name", get(handlers::hello_name))
+        .route("/model", get(handlers::model))
 }
 
 pub fn define_address() -> SocketAddr {
