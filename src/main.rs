@@ -5,6 +5,7 @@ mod config;
 mod handlers;
 mod model;
 mod setup;
+mod structs;
 
 #[tokio::main]
 async fn main() {
