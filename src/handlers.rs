@@ -18,9 +18,25 @@ pub async fn handle_model(query: Query<ModelParams>) -> String {
     let results: (Vec<i64>, &[i64]) = outputs["output_label"].extract_raw_tensor().unwrap();
     format!("{:?}", results.1)
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[tokio::test]
+    async fn test_hello_world() {
+        let results = hello_world().await;
+        assert_eq!(results, String::from("Hello, World!\n"));
+    }
+
+    #[tokio::test]
+    async fn test_hello_name() {
+        let query = Name {
+            name: String::from("John"),
+        };
+        let results = hello_name(Query(query)).await;
+        assert_eq!(results, String::from("Hello, John\n"));
+    }
+
     #[tokio::test]
     async fn test_model_0() {
         let inputs = ModelParams {
