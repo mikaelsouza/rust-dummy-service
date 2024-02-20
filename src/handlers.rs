@@ -13,8 +13,10 @@ pub async fn hello_name(query: Query<Name>) -> String {
 }
 
 pub async fn handle_model(query: Query<ModelParams>) -> String {
-    let outputs = Model::run_model(query);
-    format!("{:?}", outputs.1)
+    let model = Model::new();
+    let outputs = model.run_model(query);
+    let results: (Vec<i64>, &[i64]) = outputs["output_label"].extract_raw_tensor().unwrap();
+    format!("{:?}", results.1)
 }
 #[cfg(test)]
 mod tests {
