@@ -13,9 +13,8 @@ pub async fn hello_name(query: Query<Name>) -> String {
 }
 
 pub async fn handle_model(query: Query<ModelParams>) -> String {
-    let mut model = Model { model: None };
-    let result = model.run_model(query);
-    format!("{:?}", result.1)
+    let outputs = Model::run_model(query);
+    format!("{:?}", outputs.1)
 }
 #[cfg(test)]
 mod tests {
