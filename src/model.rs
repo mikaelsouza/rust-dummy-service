@@ -1,8 +1,7 @@
+use crate::structs::ModelParams;
 use axum::extract::Query;
 use ndarray::Array2;
 use ort;
-
-use crate::structs::ModelParams;
 
 pub struct Model {
     pub session: ort::Session,

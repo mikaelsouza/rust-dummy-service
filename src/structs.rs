@@ -1,4 +1,6 @@
+use crate::model::Model;
 use serde::Deserialize;
+use std::sync::{Arc, RwLock};
 
 #[derive(Deserialize)]
 pub struct ModelParams {
@@ -11,4 +13,9 @@ pub struct ModelParams {
 #[derive(Deserialize)]
 pub struct Name {
     pub name: String,
+}
+
+#[derive(Clone)]
+pub struct AppState {
+    pub model: Arc<RwLock<Model>>,
 }

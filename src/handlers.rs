@@ -1,8 +1,5 @@
-use crate::{
-    model::Model,
-    structs::{ModelParams, Name},
-};
-use axum::extract::Query;
+use crate::structs::{AppState, ModelParams, Name};
+use axum::extract::{Query, State};
 
 pub async fn hello_world() -> String {
     format!("Hello, World!\n")
@@ -12,9 +9,9 @@ pub async fn hello_name(query: Query<Name>) -> String {
     format!("Hello, {}\n", query.name)
 }
 
-pub async fn handle_model(query: Query<ModelParams>) -> String {
-    let model = Model::new();
-    let outputs = model.run_model(query);
+pub async fn handle_model(State(state): State<AppState>, query: Query<ModelParams>) -> String {
+    let session = state.model.read().unwrap();
+    let outputs = session.run_model(query);
     let results: (Vec<i64>, &[i64]) = outputs["output_label"].extract_raw_tensor().unwrap();
     format!("{:?}", results.1)
 }
@@ -22,6 +19,8 @@ pub async fn handle_model(query: Query<ModelParams>) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::{Arc, RwLock};
+
     #[tokio::test]
     async fn test_hello_world() {
         let results = hello_world().await;
@@ -45,8 +44,11 @@ mod tests {
             val3: 1.4,
             val4: 0.2,
         };
+        let state = AppState {
+            model: Arc::new(RwLock::new(crate::model::Model::new())),
+        };
         let query = Query(inputs);
-        let results = handle_model(query).await;
+        let results = handle_model(State(state), query).await;
         assert_eq!(results, String::from("[0]"));
     }
     #[tokio::test]
@@ -57,9 +59,11 @@ mod tests {
             val3: 4.7,
             val4: 1.4,
         };
-
+        let state = AppState {
+            model: Arc::new(RwLock::new(crate::model::Model::new())),
+        };
         let query = Query(inputs);
-        let results = handle_model(query).await;
+        let results = handle_model(State(state), query).await;
         assert_eq!(results, String::from("[1]"));
     }
 
@@ -71,9 +75,11 @@ mod tests {
             val3: 6.0,
             val4: 2.5,
         };
-
+        let state = AppState {
+            model: Arc::new(RwLock::new(crate::model::Model::new())),
+        };
         let query = Query(inputs);
-        let results = handle_model(query).await;
+        let results = handle_model(State(state), query).await;
         assert_eq!(results, String::from("[2]"));
     }
 }

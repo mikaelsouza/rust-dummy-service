@@ -1,11 +1,10 @@
-use env_logger;
-use envconfig::Envconfig;
-use log;
 mod config;
 mod handlers;
 mod model;
 mod setup;
 mod structs;
+use envconfig::Envconfig;
+use {env_logger, log};
 
 #[tokio::main]
 async fn main() {
