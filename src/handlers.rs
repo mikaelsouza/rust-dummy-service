@@ -12,7 +12,7 @@ pub async fn hello_name(query: Query<Name>) -> String {
 pub async fn handle_model(State(state): State<AppState>, query: Query<ModelParams>) -> String {
     let session = state.model.read().unwrap();
     let outputs = session.run_model(query);
-    let results: (Vec<i64>, &[i64]) = outputs["output_label"].extract_raw_tensor().unwrap();
+    let results: (Vec<i64>, &[i64]) = outputs["output_label"].try_extract_raw_tensor().unwrap();
     format!("{:?}", results.1)
 }
 
