@@ -12,5 +12,5 @@ serde = { version = "*", features = ["derive"] }
 envconfig = { version = "*" }
 log = { version = "*" }
 env_logger = { version = "*" }
-ort = { version = "2.0.0-rc.2" }
+ort = { version = "=2.0.0-rc.9"}
 ndarray = { version = "*" }
