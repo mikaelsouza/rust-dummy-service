@@ -18,7 +18,7 @@ pub fn define_routes() -> Router {
 
 pub fn define_address() -> SocketAddr {
     let ip = IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0));
-    let port = 3000;
+    let port = 8080;
 
     SocketAddr::new(ip, port)
 }
